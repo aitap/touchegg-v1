@@ -13,3 +13,4 @@ Touchégg initially going to be designed to provide [https://code.google.com/p/e
 So Touchégg is a multi-touch gestures recognizer written in C + + using the Qt 4 and utouch-geis.
 
 Through a simple configuration file you can attach an action to a particular gesture, and you can, by gestures on the trackpad, maximize or minimize windows, resize, show the desktop, emulate all mouse functions, and more.
+
