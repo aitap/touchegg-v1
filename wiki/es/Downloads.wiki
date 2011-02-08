@@ -1,3 +1,6 @@
+#sidebar
+
+
  * *Touchegg v0.1:*
 
  [http://touchegg.googlecode.com/files/touchegg_0.1-1_i386.deb - Descargar paquete DEB para Ubuntu 10.10 (i386)]
