@@ -4,6 +4,6 @@ Then you can see a list with the principal milestones of Touchégg project.
 
 = Milestones =
 
-|| Date || Event ||
+|| *Date* || *Event* ||
 || 23/01/2011 || Touchégg v0.1 released ||
 || 07/02/2011 || Touchégg gets more than 1000 downloads. Thanks to all! ||

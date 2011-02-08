@@ -4,6 +4,6 @@ A continuación puede ver una lista de los principales eventos relaccionados con
 
 = Milestones =
 
-|| Fecha || Evento ||
+|| *Fecha* || *Evento* ||
 || 23/01/2011 || Touchégg v0.1 ||
 || 07/02/2011 || Touchégg alcanza más de 1000 descargas. ¡Gracias a todos! ||

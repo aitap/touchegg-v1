@@ -16,7 +16,9 @@ Compilar el código fuente es muy sencillo, basta con seguir estos tres pasos:
 
  * 1 - [https://code.google.com/p/touchegg/wiki/Downloads?tm=2 Descargar] y descomprimir el código fuente:
  * 2 - Intalar las dependencias de Touchégg, abra un terminal y escriba lo siguiente:
- {{{$ sudo apt-get install build-essential libqt4-dev utouch libx11-6 }}}
+ {{{
+ $ sudo apt-get install build-essential libqt4-dev utouch libx11-6
+ }}}
  * 3 - Compilar e instalar Touchégg:
  {{{
  $ qmake
