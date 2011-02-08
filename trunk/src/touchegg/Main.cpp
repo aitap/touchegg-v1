@@ -11,24 +11,22 @@
  *
  * @author José Expósito
  */
-#include "src/touchegg/gestures/handler/GestureHandler.h"
+#include "src/touchegg/util/Include.h"
+#include "src/touchegg/Touchegg.h"
 
 /**
  * @~spanish
- * Función de inicio de Egg Window Manager.
+ * Función de inicio de Touchégg.
  * @param argc Número de argumentos recibidos por consola.
- * @param argc Lista de argumentos.
+ * @param argv Lista de argumentos.
  *
  * @~english
- * Start function for Egg Window Manager.
+ * Start function for Touchégg.
  * @param argc Number of arguments received by console.
- * @param argc Argument list.
+ * @param argv Argument list.
  */
 int main(int argc, char** argv) {
     QApplication app(argc, argv);
-
-    GestureHandler gHandler;
-    QTimer::singleShot(0, &gHandler, SLOT(run()));
-
+    Touchegg touchegg;
     return app.exec();
 }

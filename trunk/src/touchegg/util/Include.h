@@ -16,15 +16,20 @@
 
     // Qt
     #include <QApplication>
+    #include <QObject>
     #include <QTimer>
+    #include <QThread>
     #include <QDebug>
     #include <QX11Info>
     #include <QHash>
     #include <QString>
     #include <QStringList>
     #include <QVariant>
+    #include <QDir>
     #include <QFile>
     #include <QSettings>
+    #include <QMetaEnum>
+    #include <QMetaEnum>
 
     // Xlib
     #include <X11/Xlib.h>
@@ -35,5 +40,8 @@
     extern "C" {
         #include <geis/geis.h>
     }
+
+    // Others
+    #include <cmath>
 
 #endif // INCLUDE_H

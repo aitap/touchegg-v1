@@ -17,31 +17,30 @@
 
 
 #include "src/touchegg/util/Include.h"
-#include "src/touchegg/config/Config.h"
-#include "src/touchegg/actions/Action.h"
-#include "src/touchegg/gestures/gesturesimp/Gesture.h"
+#include "src/touchegg/gestures/types/GestureTypeEnum.h"
+#include "src/touchegg/gestures/implementations/Gesture.h"
 
-#include "src/touchegg/gestures/gesturesimp/TwoFingersTap.h"
-#include "src/touchegg/gestures/gesturesimp/ThreeFingersTap.h"
-#include "src/touchegg/gestures/gesturesimp/FourFingersTap.h"
-#include "src/touchegg/gestures/gesturesimp/FiveFingersTap.h"
+#include "src/touchegg/gestures/implementations/TwoFingersTap.h"
+#include "src/touchegg/gestures/implementations/ThreeFingersTap.h"
+#include "src/touchegg/gestures/implementations/FourFingersTap.h"
+#include "src/touchegg/gestures/implementations/FiveFingersTap.h"
 
-#include "src/touchegg/gestures/gesturesimp/ThreeFingersPinch.h"
+#include "src/touchegg/gestures/implementations/ThreeFingersPinch.h"
 
-#include "src/touchegg/gestures/gesturesimp/TwoFingersDragUp.h"
-#include "src/touchegg/gestures/gesturesimp/TwoFingersDragDown.h"
-#include "src/touchegg/gestures/gesturesimp/TwoFingersDragLeft.h"
-#include "src/touchegg/gestures/gesturesimp/TwoFingersDragRight.h"
+#include "src/touchegg/gestures/implementations/TwoFingersDragUp.h"
+#include "src/touchegg/gestures/implementations/TwoFingersDragDown.h"
+#include "src/touchegg/gestures/implementations/TwoFingersDragLeft.h"
+#include "src/touchegg/gestures/implementations/TwoFingersDragRight.h"
 
-#include "src/touchegg/gestures/gesturesimp/ThreeFingersDragUp.h"
-#include "src/touchegg/gestures/gesturesimp/ThreeFingersDragDown.h"
-#include "src/touchegg/gestures/gesturesimp/ThreeFingersDragLeft.h"
-#include "src/touchegg/gestures/gesturesimp/ThreeFingersDragRight.h"
+#include "src/touchegg/gestures/implementations/ThreeFingersDragUp.h"
+#include "src/touchegg/gestures/implementations/ThreeFingersDragDown.h"
+#include "src/touchegg/gestures/implementations/ThreeFingersDragLeft.h"
+#include "src/touchegg/gestures/implementations/ThreeFingersDragRight.h"
 
-#include "src/touchegg/gestures/gesturesimp/FourFingersDragUp.h"
-#include "src/touchegg/gestures/gesturesimp/FourFingersDragDown.h"
-#include "src/touchegg/gestures/gesturesimp/FourFingersDragLeft.h"
-#include "src/touchegg/gestures/gesturesimp/FourFingersDragRight.h"
+#include "src/touchegg/gestures/implementations/FourFingersDragUp.h"
+#include "src/touchegg/gestures/implementations/FourFingersDragDown.h"
+#include "src/touchegg/gestures/implementations/FourFingersDragLeft.h"
+#include "src/touchegg/gestures/implementations/FourFingersDragRight.h"
 
 
 /**
@@ -82,6 +81,8 @@ class GestureFactory {
          */
         static GestureFactory* getInstance();
 
+        //----------------------------------------------------------------------
+
         /**
          * @~spanish
          * Crea un gesto con las propiedades indicadas. IMPORTANTE: No olvidar
@@ -91,6 +92,7 @@ class GestureFactory {
          * @param attrs Atributos del gestos, siendo la clave el nombre del
          *        atributo (por ejemplo "focus x", "touches"...) y el valor el
          *        valor del propio atributo.
+         * @return El gesto.
          *
          * @~english
          * Creates a gesture with the specified properties. IMPORTANT: Don't
@@ -100,6 +102,7 @@ class GestureFactory {
          * @param attrs Gesture attributes, where the key is the name of the
          *        attribute (ie "focus x", "touches") and the value the value of
          *        the attribute.
+         * @param The gesture.
          */
         Gesture* createGesture(GeisGestureType type, GeisGestureId id,
             QHash<QString, QVariant> attrs);

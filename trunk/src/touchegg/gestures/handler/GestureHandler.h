@@ -16,20 +16,19 @@
 #define GESTUREHANDLER_H
 
 #include "src/touchegg/util/Include.h"
-#include "src/touchegg/gestures/gesturesimp/Gesture.h"
-#include "src/touchegg/gestures/executor/GestureExecutor.h"
-
+#include "src/touchegg/config/Config.h"
+#include "src/touchegg/gestures/factory/GestureFactory.h"
+#include "src/touchegg/actions/factory/ActionFactory.h"
 
 /**
  * @~spanish
- * Clase que recibe los gestos y con ayuda de la GestureFactory los procesa y
- * ejecuta la acción correspondiente.
+ * Clase que recibe los gestos, los procesa y ejecuta la acción correspondiente.
  *
  * @~english
- * Class that receives the gestures and with the help of the GestureFactory
- * processes it and execute the corresponding action.
+ * Class that receives the gestures, processes it and execute the corresponding
+ * action.
  */
-class GestureHandler : public QObject {
+class GestureHandler : public QThread {
 
     Q_OBJECT
 
@@ -37,147 +36,146 @@ class GestureHandler : public QObject {
 
         /**
          * @~spanish
-         * Para ejecutar los gestos.
+         * Gesto que se está ejecutando.
          *
          * @~english
-         * To execute gestures.
+         * Gesture that is running.
          */
-        static GestureExecutor gestureExecutor;
+        Gesture* currentGesture;
+
+        /**
+         * @~spanish
+         * Timer que ejecuta los taps siempre que el gesto no resulte ser un
+         * tap&hold.
+         *
+         * @~english
+         * Timer that running the taps always that the gesture does not prove
+         * to be a tap&hold.
+         */
+        QTimer* timerTap;
 
         //----------------------------------------------------------------------
 
         /**
          * @~spanish
-         * Devuelve un QHash con todos los atributos de un gesto, siendo la
-         * clave el nombre del atributo (por ejemplo "focus x", "touches"...) y
-         * el valor el valor del propio atributo.
-         * @param numAttrs Número de atributos recibidos.
-         * @param attrs    Lista de atributos recibidos.
-         * @return El QHash
+         * Factoría para crear los gestos.
          *
          * @~english
-         * Returns a Hash with all attributes of a gesture, where the key is the
-         * name of the attribute (ie "focus x", "touches") and the value the
-         * value of the attribute.
-         * @param numAttrs Number of attributes received.
-         * @param attrs    List of attributes.
-         * @return The hash.
+         * Factory to create gestures.
          */
-        static QHash<QString, QVariant> getGestureAttrs(GeisSize numAttrs,
-            GeisGestureAttr* attrs);
+        GestureFactory* gestureFact;
+
+        /**
+         * @~spanish
+         * Factoría para crear las acciones.
+         *
+         * @~english
+         * Factory to create gestures.
+         */
+        ActionFactory* actionFact;
+
+        /**
+         * @~spanish
+         * Provee acceso a la configurración.
+         *
+         * @~english
+         * Provides access to configurración.
+         */
+        Config* config;
+
+    private slots:
+
+        /**
+         * @~spanish
+         * Ejecuta los taps que no han resultado ser un tap&hold.
+         *
+         * @~english
+         * Run the taps that have not proven to be a tap&hold.
+         */
+        void executeTap();
 
     public:
 
         /**
          * @~spanish
-         * Función callback que se llamará cuando se añada un nuevo gesto.
-         * @param cookie   Parametros extras que se pueden pasar  la función.
-         * @param type     Tipo del gesto.
-         * @param id       Identificador único del gesto.
-         * @param numAttrs Número de atributos recibidos.
-         * @param attrs    Lista de atributos recibidos.
+         * Constructor.
          *
          * @~english
-         * Callback function that is called when a gesture is added.
-         * @param cookie   Extra parameters to be passed to the function.
-         * @param type     Gesture type.
-         * @param id       Unique gesture identifier.
-         * @param numAttrs Number of attributes received.
-         * @param attrs    List of attributes.
+         * Constructor.
          */
-        static void gestureAdded(void* cookie, GeisGestureType type,
-            GeisGestureId id, GeisSize numAttrs, GeisGestureAttr* attrs);
+        GestureHandler();
 
         /**
          * @~spanish
-         * Función callback que se llamará cuando se elimine gesto.
-         * @param cookie   Parametros extras que se pueden pasar  la función.
-         * @param type     Tipo del gesto.
-         * @param id       Identificador único del gesto.
-         * @param numAttrs Número de atributos recibidos.
-         * @param attrs    Lista de atributos recibidos.
+         * Destructor.
          *
          * @~english
-         * Callback function that is called when a gesture is removed.
-         * @param cookie   Extra parameters to be passed to the function.
-         * @param type     Gesture type.
-         * @param id       Unique gesture identifier.
-         * @param numAttrs Number of attributes received.
-         * @param attrs    List of attributes.
+         * Destructor.
          */
-        static void gestureRemoved(void* cookie, GeisGestureType type,
-            GeisGestureId id, GeisSize numAttrs, GeisGestureAttr* attrs);
-
-        /**
-         * @~spanish
-         * Función callback que se llamará cuando se inicie un gesto.
-         * @param cookie   Parametros extras que se pueden pasar  la función.
-         * @param type     Tipo del gesto.
-         * @param id       Identificador único del gesto.
-         * @param numAttrs Número de atributos recibidos.
-         * @param attrs    Lista de atributos recibidos.
-         *
-         * @~english
-         * Callback function that is called when a gesture starts.
-         * @param cookie   Extra parameters to be passed to the function.
-         * @param type     Gesture type.
-         * @param id       Unique gesture identifier.
-         * @param numAttrs Number of attributes received.
-         * @param attrs    List of attributes.
-         */
-        static void gestureStart(void* cookie, GeisGestureType type,
-            GeisGestureId id, GeisSize numAttrs, GeisGestureAttr* attrs);
-
-        /**
-         * @~spanish
-         * Función callback que se llamará cuando se actualice un gesto.
-         * @param cookie   Parametros extras que se pueden pasar  la función.
-         * @param type     Tipo del gesto.
-         * @param id       Identificador único del gesto.
-         * @param numAttrs Número de atributos recibidos.
-         * @param attrs    Lista de atributos recibidos.
-         *
-         * @~english
-         * Callback function that is called when a gesture is updated.
-         * @param cookie   Extra parameters to be passed to the function.
-         * @param type     Gesture type.
-         * @param id       Unique gesture identifier.
-         * @param numAttrs Number of attributes received.
-         * @param attrs    List of attributes.
-         */
-        static void gestureUpdate(void* cookie, GeisGestureType type,
-            GeisGestureId id, GeisSize numAttrs, GeisGestureAttr* attrs);
-
-        /**
-         * @~spanish
-         * Función callback que se llamará cuando un gesto finalice.
-         * @param cookie   Parametros extras que se pueden pasar  la función.
-         * @param type     Tipo del gesto.
-         * @param id       Identificador único del gesto.
-         * @param numAttrs Número de atributos recibidos.
-         * @param attrs    Lista de atributos recibidos.
-         *
-         * @~english
-         * Callback function that is called when a gesture is finished.
-         * @param cookie   Extra parameters to be passed to the function.
-         * @param type     Gesture type.
-         * @param id       Unique gesture identifier.
-         * @param numAttrs Number of attributes received.
-         * @param attrs    List of attributes.
-         */
-        static void gestureFinish(void* cookie, GeisGestureType type,
-            GeisGestureId id, GeisSize numAttrs, GeisGestureAttr* attrs);
+        virtual ~GestureHandler();
 
     public slots:
 
         /**
          * @~spanish
-         * Inicializa la aplicación y lee los gestos que se producen.
+         * Ejecuta el gesto indicado.
+         * @param type  Tipo del gesto.
+         * @param id    ID del gesto.
+         * @param attrs Atributos del gestos, siendo la clave el nombre del
+         *        atributo (por ejemplo "focus x", "touches"...) y el valor el
+         *        valor del propio atributo.
          *
          * @~english
-         * Initializes the application and reads the gestures that are produced.
+         * Runs the indicated gesture.
+         * @param type  Gesture type.
+         * @param id    Gesture ID.
+         * @param attrs Gesture attributes, where the key is the name of the
+         *        attribute (ie "focus x", "touches") and the value the value of
+         *        the attribute.
          */
-        void run();
+        void executeGestureStart(GeisGestureType type, GeisGestureId id,
+                const QHash<QString, QVariant>& attrs);
+
+        /**
+         * @~spanish
+         * Ejecuta el gesto indicado.
+         * @param type  Tipo del gesto.
+         * @param id    ID del gesto.
+         * @param attrs Atributos del gestos, siendo la clave el nombre del
+         *        atributo (por ejemplo "focus x", "touches"...) y el valor el
+         *        valor del propio atributo.
+         *
+         * @~english
+         * Runs the indicated gesture.
+         * @param type  Gesture type.
+         * @param id    Gesture ID.
+         * @param attrs Gesture attributes, where the key is the name of the
+         *        attribute (ie "focus x", "touches") and the value the value of
+         *        the attribute.
+         */
+        void executeGestureUpdate(GeisGestureType type, GeisGestureId id,
+                const QHash<QString, QVariant>& attrs);
+
+        /**
+         * @~spanish
+         * Ejecuta el gesto indicado.
+         * @param type  Tipo del gesto.
+         * @param id    ID del gesto.
+         * @param attrs Atributos del gestos, siendo la clave el nombre del
+         *        atributo (por ejemplo "focus x", "touches"...) y el valor el
+         *        valor del propio atributo.
+         *
+         * @~english
+         * Runs the indicated gesture.
+         * @param type  Gesture type.
+         * @param id    Gesture ID.
+         * @param attrs Gesture attributes, where the key is the name of the
+         *        attribute (ie "focus x", "touches") and the value the value of
+         *        the attribute.
+         */
+        void executeGestureFinish(GeisGestureType type, GeisGestureId id,
+                const QHash<QString, QVariant>& attrs);
+
 };
 
 #endif // GESTUREHANDLER_H

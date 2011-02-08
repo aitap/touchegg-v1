@@ -18,41 +18,10 @@
 // **********             STATIC METHODS AND VARIABLES             ********** //
 // ************************************************************************** //
 
-const char* Config::USR_SHARE_CONFIG_FILE    =
-        "/usr/share/touchegg/touchegg.conf";
-const char* Config::HOME_CONFIG_FILE         = "/.touchegg/touchegg.conf";
-
-const char* Config::TWO_FINGERS_TAP          = "TWO_FINGERS_TAP";
-const char* Config::THREE_FINGERS_TAP        = "THREE_FINGERS_TAP";
-const char* Config::FOUR_FINGERS_TAP         = "FOUR_FINGERS_TAP";
-const char* Config::FIVE_FINGERS_TAP         = "FIVE_FINGERS_TAP";
-
-const char* Config::THREE_FINGERS_PINCH      = "THREE_FINGERS_PINCH";
-
-const char* Config::TWO_FINGERS_DRAG_UP      = "TWO_FINGERS_DRAG_UP";
-const char* Config::TWO_FINGERS_DRAG_DOWN    = "TWO_FINGERS_DRAG_DOWN";
-const char* Config::TWO_FINGERS_DRAG_LEFT    = "TWO_FINGERS_DRAG_LEFT";
-const char* Config::TWO_FINGERS_DRAG_RIGHT   = "TWO_FINGERS_DRAG_RIGHT";
-const char* Config::THREE_FINGERS_DRAG_UP    = "THREE_FINGERS_DRAG_UP";
-const char* Config::THREE_FINGERS_DRAG_DOWN  = "THREE_FINGERS_DRAG_DOWN";
-const char* Config::THREE_FINGERS_DRAG_LEFT  = "THREE_FINGERS_DRAG_LEFT";
-const char* Config::THREE_FINGERS_DRAG_RIGHT = "THREE_FINGERS_DRAG_RIGHT";
-const char* Config::FOUR_FINGERS_DRAG_UP     = "FOUR_FINGERS_DRAG_UP";
-const char* Config::FOUR_FINGERS_DRAG_DOWN   = "FOUR_FINGERS_DRAG_DOWN";
-const char* Config::FOUR_FINGERS_DRAG_LEFT   = "FOUR_FINGERS_DRAG_LEFT";
-const char* Config::FOUR_FINGERS_DRAG_RIGHT  = "FOUR_FINGERS_DRAG_RIGHT";
-
-const char* Config::RIGHT_BUTTON_CLICK       = "RIGHT_BUTTON_CLICK";
-const char* Config::MIDDLE_BUTTON_CLICK      = "MIDDLE_BUTTON_CLICK";
-const char* Config::MOUSE_WHELL_UP           = "MOUSE_WHEEL_UP";
-const char* Config::MOUSE_WHELL_DOWN         = "MOUSE_WHEEL_DOWN";
-const char* Config::MINIMIZE_WINDOW          = "MINIMIZE_WINDOW";
-const char* Config::MAXIMIZE_RESTORE_WINDOW  = "MAXIMIZE_RESTORE_WINDOW";
-const char* Config::CLOSE_WINDOW             = "CLOSE_WINDOW";
-const char* Config::RESIZE_WINDOW            = "RESIZE_WINDOW";
-const char* Config::SHOW_DESKTOP             = "SHOW_DESKTOP";
-const char* Config::CHANGE_DESKTOP           = "CHANGE_DESKTOP";
-const char* Config::SEND_KEYS                = "SEND_KEYS";
+const char* Config::USR_SHARE_CONFIG_FILE = "/usr/share/touchegg/touchegg.conf";
+const char* Config::HOME_CONFIG_FILE      = "/.touchegg/touchegg.conf";
+const char* Config::HOME_CONFIG_DIR       = ".touchegg";
+const char* Config::TAP_AND_HOLD_TIME     = "GENERAL_CONFIG/tap_and_hold_time";
 
 //------------------------------------------------------------------------------
 
@@ -65,71 +34,62 @@ Config* Config::getInstance() {
     return Config::instance;
 }
 
-
-Config::Config() {
-    // Intentamos leer la configuración del home
-    QString homePath = getenv("HOME");
-
-    QFile homeFile(homePath+HOME_CONFIG_FILE);
-    QFile usrFile(USR_SHARE_CONFIG_FILE);
-
-    if(homeFile.exists()) {
-        qDebug() << "Reading config from " << homePath + HOME_CONFIG_FILE;
-        this->settings = new QSettings(homePath + HOME_CONFIG_FILE,
-            QSettings::NativeFormat);
-    } else if(usrFile.exists()) {
-        qDebug() << "Reading config from " << USR_SHARE_CONFIG_FILE;
-        this->settings = new QSettings(USR_SHARE_CONFIG_FILE,
-            QSettings::NativeFormat);
-    } else {
-        qFatal("ERROR: Could not read configuration");
+void Config::loadConfig() {
+    if(instance != NULL) {
+        delete instance;
+        instance = NULL;
     }
+    Config::getInstance();
 }
 
 
 // ************************************************************************** //
-// **********                    PUBLIC METHODS                    ********** //
+// **********              CONSTRUCTORS AND DESTRUCTOR             ********** //
 // ************************************************************************** //
 
-Action* Config::getAssociatedAction(const char* gesture) const {
-    QString action    = this->settings->value(
-            QString(gesture)+"/action").toString();
-    QString actionCfg = this->settings->value(
-            QString(gesture)+"/settings").toString();
+Config::Config() {
+    QFile homeFile(QDir::homePath() + HOME_CONFIG_FILE);
+    QFile usrFile(USR_SHARE_CONFIG_FILE);
 
-    if(action == RIGHT_BUTTON_CLICK)
-        return new RightButtonClick(actionCfg);
+    if(!usrFile.exists()) {
+        qDebug() << USR_SHARE_CONFIG_FILE
+                 << " not found, reinstall application can solve the problem";
+        exit(-1);
+    }
 
-    else if(action == MIDDLE_BUTTON_CLICK)
-        return new MiddleButtonClick(actionCfg);
+    if(!homeFile.exists()) {
+        qDebug() << QDir::homePath() + HOME_CONFIG_FILE
+                 << " not found, copying config from "
+                 << USR_SHARE_CONFIG_FILE;
+        QDir::home().mkdir(HOME_CONFIG_DIR);
+        usrFile.copy(QDir::homePath() + HOME_CONFIG_FILE);
+    }
 
-    else if(action == MOUSE_WHELL_UP)
-        return new MouseWheelUp(actionCfg);
+    qDebug() << "Reading config from " << QDir::homePath() + HOME_CONFIG_FILE;
+    this->settings = new QSettings(QDir::homePath() + HOME_CONFIG_FILE,
+            QSettings::NativeFormat);
+}
 
-    else if(action == MOUSE_WHELL_DOWN)
-        return new MouseWheelDown(actionCfg);
 
-    else if(action == MINIMIZE_WINDOW)
-        return new MinimizeWindow(actionCfg);
+// ************************************************************************** //
+// **********                      GET/SET/IS                      ********** //
+// ************************************************************************** //
 
-    else if(action == MAXIMIZE_RESTORE_WINDOW)
-        return new MaximizeRestoreWindow(actionCfg);
+int Config::getTapAndHoldTime() const {
+    return this->settings->value(TAP_AND_HOLD_TIME).toInt();
+}
 
-    else if(action == CLOSE_WINDOW)
-        return new CloseWindow(actionCfg);
+//------------------------------------------------------------------------------
 
-    else if(action == RESIZE_WINDOW)
-        return new ResizeWindow(actionCfg);
+ActionTypeEnum::ActionType Config::getAssociatedAction(
+        GestureTypeEnum::GestureType gestureType) const {
+    QString gesture = GestureTypeEnum::getValue(gestureType);
+    QString action  = this->settings->value(gesture + "/action").toString();
+    return ActionTypeEnum::getEnum(action);
+}
 
-    else if(action == SHOW_DESKTOP)
-        return new ShowDesktop(actionCfg);
-
-    else if(action == CHANGE_DESKTOP)
-        return new ChangeDesktop(actionCfg);
-
-    else if(action == SEND_KEYS)
-        return new SendKeys(actionCfg);
-
-    else
-        return NULL;
+QString Config::getAssociatedSettings(GestureTypeEnum::GestureType
+        gestureType) const {
+    QString gesture = GestureTypeEnum::getValue(gestureType);
+    return this->settings->value(gesture + "/settings").toString();
 }

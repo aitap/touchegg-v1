@@ -1,12 +1,18 @@
-SOURCES += src/touchegg/Main.cpp
-
 include(util/util.pri)
-
-include(gestures/handler/handler.pri)
-include(gestures/factory/factory.pri)
-include(gestures/gesturesimp/gesturesimp.pri)
-include(gestures/executor/executor.pri)
-
-include(actions/actions.pri)
-
 include(config/config.pri)
+
+include(gestures/collector/gestures.collector.pri)
+include(gestures/handler/gestures.handler.pri)
+include(gestures/factory/gestures.factory.pri)
+include(gestures/implementations/gestures.implementations.pri)
+include(gestures/types/gestures.types.pri)
+
+include(actions/implementations/actions.implementations.pri)
+include(actions/types/actions.types.pri)
+include(actions/factory/actions.factory.pri)
+
+HEADERS += \
+    src/touchegg/Touchegg.h
+
+SOURCES += src/touchegg/Main.cpp \
+    src/touchegg/Touchegg.cpp

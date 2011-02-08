@@ -14,72 +14,42 @@
  */
 #include "GestureHandler.h"
 
-
 // ************************************************************************** //
-// **********             STATIC METHODS AND VARIABLES             ********** //
+// **********              CONSTRUCTORS AND DESTRUCTOR             ********** //
 // ************************************************************************** //
 
-GestureExecutor GestureHandler::gestureExecutor;
+GestureHandler::GestureHandler() : QThread() {
+    this->currentGesture = NULL;
 
-void GestureHandler::gestureAdded(void* /*cookie*/, GeisGestureType /*type*/,
-        GeisGestureId /*id*/, GeisSize /*numAttrs*/,
-        GeisGestureAttr* /*attrs*/) {}
+    this->gestureFact = GestureFactory::getInstance();
+    this->actionFact  = ActionFactory::getInstance();
+    this->config      = Config::getInstance();
 
-void GestureHandler::gestureRemoved(void* /*cookie*/, GeisGestureType /*type*/,
-        GeisGestureId /*id*/, GeisSize /*numAttrs*/,
-        GeisGestureAttr* /*attrs*/) {}
-
-void GestureHandler::gestureStart(void* /*cookie*/, GeisGestureType type,
-        GeisGestureId id, GeisSize numAttrs, GeisGestureAttr* attrs) {
-    gestureExecutor.executeGestureStart(type, id,
-        getGestureAttrs(numAttrs, attrs));
+    this->timerTap = new QTimer(this);
+    this->timerTap->setInterval(this->config->getTapAndHoldTime());
+    connect(this->timerTap, SIGNAL(timeout()), this, SLOT(executeTap()));
 }
 
-void GestureHandler::gestureUpdate(void* /*cookie*/, GeisGestureType type,
-        GeisGestureId id, GeisSize numAttrs, GeisGestureAttr* attrs) {
-    gestureExecutor.executeGestureUpdate(type, id,
-        getGestureAttrs(numAttrs, attrs));
-}
-
-void GestureHandler::gestureFinish(void* /*cookie*/, GeisGestureType type,
-        GeisGestureId id, GeisSize numAttrs, GeisGestureAttr* attrs) {
-    gestureExecutor.executeGestureFinish(type, id,
-        getGestureAttrs(numAttrs, attrs));
+GestureHandler::~GestureHandler() {
+    if(this->currentGesture != NULL)
+        delete this->currentGesture;
+    delete timerTap;
 }
 
 
 // ************************************************************************** //
-// **********                    PRIVATE METHODS                   ********** //
+// **********                     PRIVATE SLOTS                    ********** //
 // ************************************************************************** //
 
-QHash<QString, QVariant> GestureHandler::getGestureAttrs(GeisSize numAttrs,
-        GeisGestureAttr* attrs) {
-    QHash<QString, QVariant> ret;
+void GestureHandler::executeTap() {
+    qDebug() << "TICK TACK";
+    this->timerTap->stop();
 
-    for(unsigned int n=0; n<numAttrs; n++) {
-        QVariant value;
-
-        switch (attrs[n].type) {
-        case GEIS_ATTR_TYPE_BOOLEAN:
-            value = attrs[n].boolean_val;
-            break;
-        case GEIS_ATTR_TYPE_FLOAT:
-            value = attrs[n].float_val;
-            break;
-        case GEIS_ATTR_TYPE_INTEGER:
-            value = attrs[n].integer_val;
-            break;
-        case GEIS_ATTR_TYPE_STRING:
-            value = attrs[n].string_val;
-            break;
-        case GEIS_ATTR_TYPE_UNKNOWN:
-            break;
-        }
-
-        ret.insert(attrs[n].name, value);
+    if(this->currentGesture != NULL) {
+        this->currentGesture->update();
+        delete this->currentGesture;
+        this->currentGesture = NULL;
     }
-
-    return ret;
 }
 
 
@@ -87,66 +57,86 @@ QHash<QString, QVariant> GestureHandler::getGestureAttrs(GeisSize numAttrs,
 // **********                     PUBLIC SLOTS                     ********** //
 // ************************************************************************** //
 
-void GestureHandler::run() {
-    GeisInstance instance;
-    GeisWinInfo  winInfo;
+void GestureHandler::executeGestureStart(GeisGestureType type,
+        GeisGestureId id, const QHash<QString, QVariant>& attrs) {
+    // Si no se está ejecutando ningún gesto creamos uno nuevo
+    if(this->currentGesture == NULL) {
+        this->currentGesture = this->gestureFact->createGesture(type,id,attrs);
 
-    GeisXcbWinInfo xcbWinInfo;
-    xcbWinInfo.display_name = NULL;
-    xcbWinInfo.screenp      = NULL;
-    // Root window para recibir todos los gestos
-    xcbWinInfo.window_id    = QX11Info::appRootWindow();
+        if(this->currentGesture != NULL) {
+            // Creamos y asignamos la acción asociada al gesto
+            ActionTypeEnum::ActionType actionType =
+                    this->config->getAssociatedAction(
+                    this->currentGesture->getType());
+            QString actionSettings = this->config->getAssociatedSettings(
+                    this->currentGesture->getType());
+            this->currentGesture->setAction(this->actionFact->createAction(
+                    actionType, actionSettings));
 
-    winInfo.win_type = GEIS_XCB_FULL_WINDOW;
-    winInfo.win_info = &xcbWinInfo;
+            // Mostramos información sobre el gesto
+            qDebug() << "[+] New gesture:";
+            qDebug() << "\tType   -> " << GestureTypeEnum::getValue(
+                    this->currentGesture->getType());
+            qDebug() << "\tAction -> " << ActionTypeEnum::getValue(actionType);
+            qDebug() << "    Gesture Start";
 
-    // Inicializamos geis
-    if(geis_init(&winInfo, &instance) != GEIS_STATUS_SUCCESS) {
-        qFatal("geis_init: Can't initialize utouch-geis");
+            // Ejecutamos el gesto
+            this->currentGesture->start();
+        }
+
+    // Si el timer está en ejecución podemos hacer un tap&hold
+    } else if(this->timerTap->isActive()) {
+        qDebug() << "TAP&HOLD??????";
+        this->timerTap->stop();
+
+        // El nuevo gesto debe ser un drag con igual número de dedos que el tap
+        // en ejecución para que se considere un tap&hold
+        if(attrs.contains("gesture name")
+                && attrs.value("gesture name", "") == "Drag"
+                && attrs.contains("touches")
+                && this->currentGesture->getAttrs().contains("touches")
+                && attrs.value("touches", -1)
+                   == this->currentGesture->getAttrs().value("touches", -1)) {
+            qDebug() << "TAP & HOLD!!!!!!!!!!!!!!!!!";
+            // TODO Tratar
+
+        // Si no es un tap&hold ejecutamos el tap con normalidad
+        } else {
+            qDebug() << "NO ES TAP & HOLD :(";
+            this->executeTap();
+        }
+
     }
+}
 
-    // Establecemos las funciones de callback
-    GeisGestureFuncs gestureFuncs;
-    gestureFuncs.added   = GestureHandler::gestureAdded;
-    gestureFuncs.removed = GestureHandler::gestureRemoved;
-    gestureFuncs.start   = GestureHandler::gestureStart;
-    gestureFuncs.update  = GestureHandler::gestureUpdate;
-    gestureFuncs.finish  = GestureHandler::gestureFinish;
+void GestureHandler::executeGestureUpdate(GeisGestureType type,
+        GeisGestureId id,const QHash<QString, QVariant>& attrs) {
+    // Si es un update del gesto en ejecución
+    if(this->currentGesture != NULL && this->currentGesture->getId() == id) {
+        qDebug() << "    Gesture Update";
+        this->currentGesture->setAttrs(attrs);
+        this->currentGesture->update();
 
-    // Nos subscribimos a los gestos que queremos recibir
-    const char* subscribe[] = {
-        GEIS_GESTURE_TYPE_TAP2,
-        GEIS_GESTURE_TYPE_TAP3,
-        GEIS_GESTURE_TYPE_TAP4,
-        GEIS_GESTURE_TYPE_TAP5,
-        GEIS_GESTURE_TYPE_DRAG2,
-        GEIS_GESTURE_TYPE_DRAG3,
-        GEIS_GESTURE_TYPE_DRAG4,
-        GEIS_GESTURE_TYPE_PINCH3,
-        NULL
-    };
-
-    if(geis_subscribe(instance, GEIS_ALL_INPUT_DEVICES, subscribe,
-                &gestureFuncs, NULL) != GEIS_STATUS_SUCCESS)
-            qFatal("geis_subscribe: Can't subscribe to gestures");
-
-    // Thanks to the geistest developer for this code
-    int fd = -1;
-    geis_configuration_get_value(instance, GEIS_CONFIG_UNIX_FD, &fd);
-
-    for(;;) {
-        fd_set read_fds;
-        FD_ZERO(&read_fds);
-        FD_SET(fd, &read_fds);
-        int sstat = select(fd+1, &read_fds, NULL, NULL, NULL);
-
-        if (sstat < 0)
-            qFatal("Error");
-
-        if (FD_ISSET(fd, &read_fds))
-          geis_event_dispatch(instance);
+    // Si no se está ejecutando ningún gesto es que es un TAP o un gesto no
+    // soportado
+    } else if(this->currentGesture == NULL) {
+        // Si es un TAP
+        this->executeGestureStart(type,id,attrs);
+        if(this->currentGesture != NULL) {
+            // No lo ejecutamos automáticamente, para que se pueda usar tap&hold
+            qDebug() << "TAP EJECUTADO, ENCENDIENDO TIMER";
+            this->timerTap->start();
+        }
     }
-    // :D
+}
 
-    geis_finish(instance);
+void GestureHandler::executeGestureFinish(GeisGestureType /*type*/,
+        GeisGestureId /*id*/, const QHash<QString, QVariant>& attrs) {
+    if(this->currentGesture != NULL) {
+        qDebug() << "    Gesture Finish";
+        this->currentGesture->setAttrs(attrs);
+        this->currentGesture->finish();
+        delete this->currentGesture;
+        this->currentGesture = NULL;
+    }
 }

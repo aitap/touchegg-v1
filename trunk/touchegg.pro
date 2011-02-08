@@ -1,7 +1,6 @@
-QT          += core
 TEMPLATE     = app
 TARGET       = touchegg
-
+QT          += core gui
 OBJECTS_DIR += build
 MOC_DIR     += build
 LIBS        += -lutouch-geis -lX11
@@ -10,7 +9,7 @@ LIBS        += -lutouch-geis -lX11
 
 target.path  = /usr/bin
 config.path  = /usr/share/touchegg
-config.files = touchegg.conf
+config.files = installation/touchegg.conf
 INSTALLS += target config
 
 

@@ -16,19 +16,8 @@
 #define CONFIG_H
 
 #include "src/touchegg/util/Include.h"
-#include "src/touchegg/actions/Action.h"
-#include "src/touchegg/actions/RightButtonClick.h"
-#include "src/touchegg/actions/MiddleButtonClick.h"
-#include "src/touchegg/actions/MouseWheelUp.h"
-#include "src/touchegg/actions/MouseWheelDown.h"
-#include "src/touchegg/actions/MinimizeWindow.h"
-#include "src/touchegg/actions/MaximizeRestoreWindow.h"
-#include "src/touchegg/actions/CloseWindow.h"
-#include "src/touchegg/actions/ResizeWindow.h"
-#include "src/touchegg/actions/ShowDesktop.h"
-#include "src/touchegg/actions/ChangeDesktop.h"
-#include "src/touchegg/actions/SendKeys.h"
-
+#include "src/touchegg/gestures/types/GestureTypeEnum.h"
+#include "src/touchegg/actions/types/ActionTypeEnum.h"
 
 /**
  * @~spanish
@@ -44,8 +33,10 @@ class Config {
         // Constantes para acceder a la configuración
         static const char* USR_SHARE_CONFIG_FILE;
         static const char* HOME_CONFIG_FILE; // Sumarle el $HOME por delante
+        static const char* HOME_CONFIG_DIR;
 
-        //----------------------------------------------------------------------
+        static const char* TAP_AND_HOLD_TIME;
+
 
         /**
          * @~spanish
@@ -74,44 +65,6 @@ class Config {
 
     public:
 
-        // Tipos de gestos
-        static const char* TWO_FINGERS_TAP;
-        static const char* THREE_FINGERS_TAP;
-        static const char* FOUR_FINGERS_TAP;
-        static const char* FIVE_FINGERS_TAP;
-
-        static const char* THREE_FINGERS_PINCH;
-
-        static const char* TWO_FINGERS_DRAG_UP;
-        static const char* TWO_FINGERS_DRAG_DOWN;
-        static const char* TWO_FINGERS_DRAG_LEFT;
-        static const char* TWO_FINGERS_DRAG_RIGHT;
-
-        static const char* THREE_FINGERS_DRAG_UP;
-        static const char* THREE_FINGERS_DRAG_DOWN;
-        static const char* THREE_FINGERS_DRAG_LEFT;
-        static const char* THREE_FINGERS_DRAG_RIGHT;
-
-        static const char* FOUR_FINGERS_DRAG_UP;
-        static const char* FOUR_FINGERS_DRAG_DOWN;
-        static const char* FOUR_FINGERS_DRAG_LEFT;
-        static const char* FOUR_FINGERS_DRAG_RIGHT;
-
-        // Tipos de acciones
-        static const char* RIGHT_BUTTON_CLICK;
-        static const char* MIDDLE_BUTTON_CLICK;
-        static const char* MOUSE_WHELL_UP;
-        static const char* MOUSE_WHELL_DOWN;
-        static const char* MINIMIZE_WINDOW;
-        static const char* MAXIMIZE_RESTORE_WINDOW;
-        static const char* CLOSE_WINDOW;
-        static const char* RESIZE_WINDOW;
-        static const char* SHOW_DESKTOP;
-        static const char* CHANGE_DESKTOP;
-        static const char* SEND_KEYS;
-
-        //----------------------------------------------------------------------
-
         /**
          * @~spanish
          * Único método para obtener una instancia de la clase.
@@ -125,16 +78,56 @@ class Config {
 
         /**
          * @~spanish
-         * Devuelve la acción asociada a el gesto indicado.
-         * @param gesture Gesto indicado.
-         * @return Acción asociada.
+         * (Re)Carga la configuración.
          *
          * @~english
-         * Returns the associated action with a gesture.
-         * @param gesture The gesture.
-         * @return The associated action.
+         * (Re)Load configuration.
          */
-        Action* getAssociatedAction(const char* gesture) const;
+        static void loadConfig();
+
+        //----------------------------------------------------------------------
+
+        /**
+         * @~spanish
+         * Devuelve el tiempo, en milisegundos, en el que se puede ejecutar un
+         * tap&hold.
+         * @return El tiempo.
+         *
+         * @~english
+         * Returns the time, in milliseconds, which can run a tap & hold.
+         * @return The time.
+         */
+        int getTapAndHoldTime() const;
+
+        //----------------------------------------------------------------------
+
+        /**
+         * @~spanish
+         * Devuelve el tipo de acción asociada a el gesto indicado.
+         * @param  gestureType Gesto indicado.
+         * @return Tipo de la acción asociada.
+         *
+         * @~english
+         * Returns the associated action type with a gesture.
+         * @param  gesture The gesture.
+         * @return Type of associated action.
+         */
+        ActionTypeEnum::ActionType getAssociatedAction(
+                GestureTypeEnum::GestureType gestureType) const;
+
+        /**
+         * @~spanish
+         * Devuelve la configuración de la acción asocada a un gesto indicado.
+         * @param  gestureType Gesto indicado.
+         * @return La configuración.
+         *
+         * @~english
+         * Returns the associated config with the indicated gesture.
+         * @param  gestureType The gesture.
+         * @return The settings.
+         */
+        QString getAssociatedSettings(GestureTypeEnum::GestureType
+                gestureType) const;
 
 };
 
