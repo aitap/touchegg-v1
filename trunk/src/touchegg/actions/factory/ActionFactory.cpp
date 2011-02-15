@@ -68,6 +68,9 @@ Action* ActionFactory::createAction(ActionTypeEnum::ActionType actionType,
     case ActionTypeEnum::SEND_KEYS:
         return new SendKeys(settings);
 
+    case ActionTypeEnum::MOVE_WINDOW:
+        return new MoveWindow(settings);
+
     default:
         return NULL;
     }

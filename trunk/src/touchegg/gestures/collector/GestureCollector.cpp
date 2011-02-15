@@ -118,6 +118,7 @@ void GestureCollector::run() {
         GEIS_GESTURE_TYPE_DRAG2,
         GEIS_GESTURE_TYPE_DRAG3,
         GEIS_GESTURE_TYPE_DRAG4,
+        GEIS_GESTURE_TYPE_DRAG5,
         GEIS_GESTURE_TYPE_PINCH3,
         NULL
     };

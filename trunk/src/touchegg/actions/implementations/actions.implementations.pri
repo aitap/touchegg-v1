@@ -11,7 +11,8 @@ HEADERS += \
     src/touchegg/actions/implementations/ShowDesktop.h \
     src/touchegg/actions/implementations/SendKeys.h \
     src/touchegg/actions/implementations/ChangeDesktop.h \
-    src/touchegg/actions/implementations/ResizeWindow.h
+    src/touchegg/actions/implementations/ResizeWindow.h \
+    src/touchegg/actions/implementations/MoveWindow.h
 
 SOURCES += \
     src/touchegg/actions/implementations/RightButtonClick.cpp \
@@ -24,4 +25,5 @@ SOURCES += \
     src/touchegg/actions/implementations/ShowDesktop.cpp \
     src/touchegg/actions/implementations/SendKeys.cpp \
     src/touchegg/actions/implementations/ChangeDesktop.cpp \
-    src/touchegg/actions/implementations/ResizeWindow.cpp
+    src/touchegg/actions/implementations/ResizeWindow.cpp \
+    src/touchegg/actions/implementations/MoveWindow.cpp

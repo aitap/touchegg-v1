@@ -122,3 +122,25 @@ Gesture* GestureFactory::createGesture(GeisGestureType /*type*/,
         return NULL;
     }
 }
+
+Gesture* GestureFactory::createTapAndHold(GeisGestureType /*type*/,
+        GeisGestureId id, QHash<QString, QVariant> attrs) {
+    if(TwoFingersTapAndHold::isThisGesture(attrs)) {
+        return new TwoFingersTapAndHold(
+                GestureTypeEnum::TWO_FINGERS_TAP_AND_HOLD, id, attrs);
+
+    } else if(ThreeFingersTapAndHold::isThisGesture(attrs)) {
+        return new ThreeFingersTapAndHold(
+                GestureTypeEnum::THREE_FINGERS_TAP_AND_HOLD, id, attrs);
+
+    } else if(FourFingersTapAndHold::isThisGesture(attrs)) {
+        return new FourFingersTapAndHold(
+                GestureTypeEnum::FOUR_FINGERS_TAP_AND_HOLD, id, attrs);
+
+    } else if(FiveFingersTapAndHold::isThisGesture(attrs)) {
+        return new FiveFingersTapAndHold(
+                GestureTypeEnum::FIVE_FINGERS_TAP_AND_HOLD, id,attrs);
+    } else {
+        return NULL;
+    }
+}

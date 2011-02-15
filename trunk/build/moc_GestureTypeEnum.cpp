@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'GestureTypeEnum.h'
 **
-** Created: Mon Feb 7 12:23:00 2011
+** Created: Sun Feb 13 15:16:27 2011
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,7 +31,7 @@ static const uint qt_meta_data_GestureTypeEnum[] = {
        0,       // signalCount
 
  // enums: name, flags, count, data
-      16, 0x0,   17,   18,
+      16, 0x0,   21,   18,
 
  // enum data: key, value
       28, uint(GestureTypeEnum::TWO_FINGERS_TAP),
@@ -51,6 +51,10 @@ static const uint qt_meta_data_GestureTypeEnum[] = {
      319, uint(GestureTypeEnum::FOUR_FINGERS_DRAG_DOWN),
      342, uint(GestureTypeEnum::FOUR_FINGERS_DRAG_LEFT),
      365, uint(GestureTypeEnum::FOUR_FINGERS_DRAG_RIGHT),
+     389, uint(GestureTypeEnum::TWO_FINGERS_TAP_AND_HOLD),
+     414, uint(GestureTypeEnum::THREE_FINGERS_TAP_AND_HOLD),
+     441, uint(GestureTypeEnum::FOUR_FINGERS_TAP_AND_HOLD),
+     467, uint(GestureTypeEnum::FIVE_FINGERS_TAP_AND_HOLD),
 
        0        // eod
 };
@@ -66,6 +70,10 @@ static const char qt_meta_stringdata_GestureTypeEnum[] = {
     "THREE_FINGERS_DRAG_RIGHT\0FOUR_FINGERS_DRAG_UP\0"
     "FOUR_FINGERS_DRAG_DOWN\0FOUR_FINGERS_DRAG_LEFT\0"
     "FOUR_FINGERS_DRAG_RIGHT\0"
+    "TWO_FINGERS_TAP_AND_HOLD\0"
+    "THREE_FINGERS_TAP_AND_HOLD\0"
+    "FOUR_FINGERS_TAP_AND_HOLD\0"
+    "FIVE_FINGERS_TAP_AND_HOLD\0"
 };
 
 const QMetaObject GestureTypeEnum::staticMetaObject = {

@@ -42,6 +42,10 @@
 #include "src/touchegg/gestures/implementations/FourFingersDragLeft.h"
 #include "src/touchegg/gestures/implementations/FourFingersDragRight.h"
 
+#include "src/touchegg/gestures/implementations/TwoFingersTapAndHold.h"
+#include "src/touchegg/gestures/implementations/ThreeFingersTapAndHold.h"
+#include "src/touchegg/gestures/implementations/FourFingersTapAndHold.h"
+#include "src/touchegg/gestures/implementations/FiveFingersTapAndHold.h"
 
 /**
  * @~spanish
@@ -107,6 +111,31 @@ class GestureFactory {
         Gesture* createGesture(GeisGestureType type, GeisGestureId id,
             QHash<QString, QVariant> attrs);
 
+        /**
+         * @~spanish
+         * Como el tap&hold no es un gesto soportado directamente por uTouch,
+         * necesitamos construirlo de manera especial.
+         * IMPORTANTE: No olvidar liberar memoria.
+         * @param type  Tipo del gesto.
+         * @param id    ID del gesto.
+         * @param attrs Atributos del gestos, siendo la clave el nombre del
+         *        atributo (por ejemplo "focus x", "touches"...) y el valor el
+         *        valor del propio atributo.
+         * @return El gesto.
+         *
+         * @~english
+         * As the tap&hold gesture is not directly supported by uTouch, is
+         * necesary build it a special way.
+         * IMPORTANT: Don't forget to free memory.
+         * @param type  Gesture type.
+         * @param id    Gesture ID.
+         * @param attrs Gesture attributes, where the key is the name of the
+         *        attribute (ie "focus x", "touches") and the value the value of
+         *        the attribute.
+         * @param The gesture.
+         */
+        Gesture* createTapAndHold(GeisGestureType type, GeisGestureId id,
+                            QHash<QString, QVariant> attrs);
 };
 
 #endif // GESTUREFACTORY_H

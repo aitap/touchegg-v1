@@ -49,7 +49,7 @@ void MinimizeWindow::executeFinish(const QHash<QString, QVariant>& /*attrs*/) {
     event.window = window;
     event.type = ClientMessage;
     event.message_type = XInternAtom(QX11Info::display(), "WM_CHANGE_STATE",
-                                     false);
+            false);
     event.format = 32;
     event.data.l[0] = IconicState;
 

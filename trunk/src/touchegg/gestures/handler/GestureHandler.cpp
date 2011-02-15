@@ -42,7 +42,6 @@ GestureHandler::~GestureHandler() {
 // ************************************************************************** //
 
 void GestureHandler::executeTap() {
-    qDebug() << "TICK TACK";
     this->timerTap->stop();
 
     if(this->currentGesture != NULL) {
@@ -86,7 +85,6 @@ void GestureHandler::executeGestureStart(GeisGestureType type,
 
     // Si el timer está en ejecución podemos hacer un tap&hold
     } else if(this->timerTap->isActive()) {
-        qDebug() << "TAP&HOLD??????";
         this->timerTap->stop();
 
         // El nuevo gesto debe ser un drag con igual número de dedos que el tap
@@ -97,12 +95,34 @@ void GestureHandler::executeGestureStart(GeisGestureType type,
                 && this->currentGesture->getAttrs().contains("touches")
                 && attrs.value("touches", -1)
                    == this->currentGesture->getAttrs().value("touches", -1)) {
-            qDebug() << "TAP & HOLD!!!!!!!!!!!!!!!!!";
-            // TODO Tratar
+            delete this->currentGesture;
+            this->currentGesture = this->gestureFact->createTapAndHold(type, id,
+                    attrs);
+
+            if(this->currentGesture != NULL) {
+                // Creamos y asignamos la acción asociada al gesto
+                ActionTypeEnum::ActionType actionType =
+                        this->config->getAssociatedAction(
+                        this->currentGesture->getType());
+                QString actionSettings = this->config->getAssociatedSettings(
+                        this->currentGesture->getType());
+                this->currentGesture->setAction(this->actionFact->createAction(
+                        actionType, actionSettings));
+
+                // Mostramos información sobre el gesto
+                qDebug() << "[+] New gesture:";
+                qDebug() << "\tType   -> " << GestureTypeEnum::getValue(
+                        this->currentGesture->getType());
+                qDebug() << "\tAction -> "
+                         << ActionTypeEnum::getValue(actionType);
+                qDebug() << "    Gesture Start";
+
+                // Ejecutamos el gesto
+                this->currentGesture->start();
+            }
 
         // Si no es un tap&hold ejecutamos el tap con normalidad
         } else {
-            qDebug() << "NO ES TAP & HOLD :(";
             this->executeTap();
         }
 
@@ -120,11 +140,9 @@ void GestureHandler::executeGestureUpdate(GeisGestureType type,
     // Si no se está ejecutando ningún gesto es que es un TAP o un gesto no
     // soportado
     } else if(this->currentGesture == NULL) {
-        // Si es un TAP
+        // Si es un TAP, esperamos un poco para que se pueda usar un tap&hold
         this->executeGestureStart(type,id,attrs);
         if(this->currentGesture != NULL) {
-            // No lo ejecutamos automáticamente, para que se pueda usar tap&hold
-            qDebug() << "TAP EJECUTADO, ENCENDIENDO TIMER";
             this->timerTap->start();
         }
     }

@@ -29,6 +29,7 @@
 #include "src/touchegg/actions/implementations/ShowDesktop.h"
 #include "src/touchegg/actions/implementations/ChangeDesktop.h"
 #include "src/touchegg/actions/implementations/SendKeys.h"
+#include "src/touchegg/actions/implementations/MoveWindow.h"
 
 /**
  * @~spanish

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ActionTypeEnum.h'
 **
-** Created: Mon Feb 7 12:23:01 2011
+** Created: Sun Feb 13 15:22:27 2011
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,7 +31,7 @@ static const uint qt_meta_data_ActionTypeEnum[] = {
        0,       // signalCount
 
  // enums: name, flags, count, data
-      15, 0x0,   11,   18,
+      15, 0x0,   12,   18,
 
  // enum data: key, value
       26, uint(ActionTypeEnum::RIGHT_BUTTON_CLICK),
@@ -45,6 +45,7 @@ static const uint qt_meta_data_ActionTypeEnum[] = {
      164, uint(ActionTypeEnum::SHOW_DESKTOP),
      177, uint(ActionTypeEnum::CHANGE_DESKTOP),
      192, uint(ActionTypeEnum::SEND_KEYS),
+     202, uint(ActionTypeEnum::MOVE_WINDOW),
 
        0        // eod
 };
@@ -55,7 +56,7 @@ static const char qt_meta_stringdata_ActionTypeEnum[] = {
     "MOUSE_WHEEL_DOWN\0MINIMIZE_WINDOW\0"
     "MAXIMIZE_RESTORE_WINDOW\0CLOSE_WINDOW\0"
     "RESIZE_WINDOW\0SHOW_DESKTOP\0CHANGE_DESKTOP\0"
-    "SEND_KEYS\0"
+    "SEND_KEYS\0MOVE_WINDOW\0"
 };
 
 const QMetaObject ActionTypeEnum::staticMetaObject = {

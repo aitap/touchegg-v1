@@ -60,7 +60,12 @@ class GestureTypeEnum : public QObject {
             FOUR_FINGERS_DRAG_UP,
             FOUR_FINGERS_DRAG_DOWN,
             FOUR_FINGERS_DRAG_LEFT,
-            FOUR_FINGERS_DRAG_RIGHT
+            FOUR_FINGERS_DRAG_RIGHT,
+
+            TWO_FINGERS_TAP_AND_HOLD,
+            THREE_FINGERS_TAP_AND_HOLD,
+            FOUR_FINGERS_TAP_AND_HOLD,
+            FIVE_FINGERS_TAP_AND_HOLD
         };
 
         /**
