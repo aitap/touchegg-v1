@@ -52,3 +52,12 @@ If exits change the Driver "<driver name>" line to Driver "evdev".
  Not support more than three fingers gestures.
 
  (Thanks [http://code.google.com/p/touchegg/issues/detail?id=3 mbuess]!)
+
+
+ * *MacBook's (MacBook, MacBook Pro, MacBook Air)*
+
+ As say me [http://code.google.com/p/touchegg/issues/detail?id=12 "jlcleary87"]
+ Touchégg is compatible with all aluminium MacBook's and configuration is
+ similar to the Magic trackpad configuration.
+
+ Thanks jlcleary87!
