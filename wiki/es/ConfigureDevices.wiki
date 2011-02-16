@@ -55,10 +55,11 @@ en /usr/share/X11/xorg.conf.d/ y cambiar la línea Driver "<driver name>" por Dr
 
 
 
- * *MacBook's (MacBook, MacBook Pro, MacBook Air)*
+ * *!MacBook's (!MacBook, !MacBook Pro, !MacBook Air)*
 
- Como ha tenido la amabilidad de aclararme [http://code.google.com/p/touchegg/issues/detail?id=12 "jlcleary87"]
- Touchégg es compatible con todos los MacBook's de aluminio y su configuración es
+ Como [http://code.google.com/p/touchegg/issues/detail?id=12 "jlcleary87"] ha
+ tenido la amabilidad de aclararme 
+ Touchégg es compatible con todos los !MacBook's de aluminio y su configuración es
  similar a la del Magic Trackpad.
 
  ¡Gracias jlcleary87!
