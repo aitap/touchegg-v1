@@ -15,9 +15,7 @@
 #define INCLUDE_H
 
     // Qt
-    #include <QApplication>
-    #include <QObject>
-    #include <QFrame>
+    #include <QtGui>
     #include <QDebug>
     #include <QString>
     #include <QMetaEnum>

@@ -20,6 +20,5 @@
         <file>drag.png</file>
         <file>pinch.png</file>
         <file>tap_and_hold.png</file>
-        <file>options.png</file>
     </qresource>
 </RCC>
