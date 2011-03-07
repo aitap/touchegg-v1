@@ -6,145 +6,160 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>676</width>
-    <height>481</height>
+    <width>662</width>
+    <height>468</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>662</width>
+    <height>468</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Touchégg</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../resources/Resources.qrc">
     <normaloff>:/images/touchegg-logo.png</normaloff>:/images/touchegg-logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <widget class="QListWidget" name="menuList">
+    <property name="geometry">
+     <rect>
+      <x>4</x>
+      <y>4</y>
+      <width>151</width>
+      <height>461</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>151</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>151</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>60</width>
+      <height>60</height>
+     </size>
+    </property>
+    <property name="movement">
+     <enum>QListView::Static</enum>
+    </property>
+    <property name="isWrapping" stdset="0">
+     <bool>true</bool>
+    </property>
+    <property name="gridSize">
+     <size>
+      <width>130</width>
+      <height>90</height>
+     </size>
+    </property>
+    <property name="viewMode">
+     <enum>QListView::IconMode</enum>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
     <item>
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="tabPosition">
-       <enum>QTabWidget::West</enum>
-      </property>
-      <property name="currentIndex">
-       <number>1</number>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>60</width>
-        <height>60</height>
-       </size>
-      </property>
-      <widget class="QWidget" name="generalConfigTab">
-       <attribute name="icon">
-        <iconset resource="../../resources/Resources.qrc">
-         <normaloff>:/images/general.png</normaloff>:/images/general.png</iconset>
-       </attribute>
-       <attribute name="title">
-        <string/>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QFrame" name="frame">
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_2">
-           <item row="0" column="0" colspan="2">
-            <widget class="QCheckBox" name="checkBox">
-             <property name="text">
-              <string>Enable Tap&amp;Hold</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Tap&amp;Hold time</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QSlider" name="horizontalSlider">
-             <property name="minimum">
-              <number>90</number>
-             </property>
-             <property name="maximum">
-              <number>250</number>
-             </property>
-             <property name="value">
-              <number>135</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>357</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tapTab">
-       <attribute name="icon">
-        <iconset resource="../../resources/Resources.qrc">
-         <normaloff>:/images/tap.png</normaloff>:/images/tap.png</iconset>
-       </attribute>
-       <attribute name="title">
-        <string/>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="dragTab">
-       <attribute name="icon">
-        <iconset resource="../../resources/Resources.qrc">
-         <normaloff>:/images/drag.png</normaloff>:/images/drag.png</iconset>
-       </attribute>
-       <attribute name="title">
-        <string/>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="pinchTab">
-       <attribute name="icon">
-        <iconset resource="../../resources/Resources.qrc">
-         <normaloff>:/images/pinch.png</normaloff>:/images/pinch.png</iconset>
-       </attribute>
-       <attribute name="title">
-        <string/>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tapAndHoldTab">
-       <attribute name="icon">
-        <iconset resource="../../resources/Resources.qrc">
-         <normaloff>:/images/tap_and_hold.png</normaloff>:/images/tap_and_hold.png</iconset>
-       </attribute>
-       <attribute name="title">
-        <string/>
-       </attribute>
-      </widget>
-     </widget>
+     <property name="text">
+      <string>Tap</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="icon">
+      <iconset resource="../../resources/Resources.qrc">
+       <normaloff>:/images/tap.png</normaloff>:/images/tap.png</iconset>
+     </property>
     </item>
     <item>
-     <widget class="QDialogButtonBox" name="buttonBox">
-      <property name="standardButtons">
-       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-      </property>
-     </widget>
+     <property name="text">
+      <string>Drag</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="icon">
+      <iconset resource="../../resources/Resources.qrc">
+       <normaloff>:/images/drag.png</normaloff>:/images/drag.png</iconset>
+     </property>
     </item>
-   </layout>
+    <item>
+     <property name="text">
+      <string>Pinch</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="icon">
+      <iconset resource="../../resources/Resources.qrc">
+       <normaloff>:/images/pinch.png</normaloff>:/images/pinch.png</iconset>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Tap &amp; Hold</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="icon">
+      <iconset resource="../../resources/Resources.qrc">
+       <normaloff>:/images/tap_and_hold.png</normaloff>:/images/tap_and_hold.png</iconset>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>General settings</string>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+    </item>
+   </widget>
+   <widget class="QDialogButtonBox" name="okCancel">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>430</y>
+      <width>151</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="standardButtons">
+     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources>

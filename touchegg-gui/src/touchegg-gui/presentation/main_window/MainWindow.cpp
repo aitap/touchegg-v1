@@ -5,27 +5,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
         ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    // Pestaña Tap
-    QWidget* tapTab = this->ui->tabWidget->widget(1);
-    QVBoxLayout* tapLayout = new QVBoxLayout;
+    // Ponemos el icono de configuración general
+    QListWidgetItem* aux = this->ui->menuList->item(4);
+    QPixmap pixmap(QIcon::fromTheme("configure").pixmap(35, 50));
+    aux->setIcon(QIcon(pixmap));
 
-    QStringList strList;
-    strList.append("Accion 1");
-    strList.append("La 2");
-    strList.append("Antena 3");
-    strList.append("Ultima");
-    GestureConfigWidget* twoFingersTap = new GestureConfigWidget(
-            GestureTypeEnum::TWO_FINGERS_TAP,
-            ":/images/two_fingers_tap.png", strList);
+    // creamos los distintos paneles con los widgeds de configuración
+    TapTab* tapTab = new TapTab;
 
-    /*GestureConfigWidget* threeFingersTap = new GestureConfigWidget(
-            GestureTypeEnum::THREE_FINGERS_TAP,
-            ":/images/three_fingers_tap.png", strList);*/
-
-    tapLayout->addWidget(twoFingersTap);
-    //tapLayout->addWidget(threeFingersTap);
-    tapLayout->addStretch();
-    tapTab->setLayout(tapLayout);
+    QGridLayout* layout = new QGridLayout;
+    layout->addWidget(this->ui->menuList, 0, 0, 2, 1);
+    layout->addWidget(tapTab, 0, 1, 1, 1);
+    layout->addWidget(this->ui->okCancel, 1, 1, 1, 1);
+    this->ui->centralwidget->setLayout(layout);
 }
 
 MainWindow::~MainWindow() {

@@ -38,7 +38,8 @@ GestureConfigWidget::GestureConfigWidget(
     this->configButton = new QPushButton();
     this->configButton->setMaximumWidth(32);
     this->configButton->setMinimumWidth(32);
-    this->configButton->setIcon(QIcon::fromTheme("document-properties"));
+    //this->configButton->setIcon(QIcon::fromTheme("document-properties"));
+    this->configButton->setIcon(QIcon::fromTheme("configure"));
 
     // Colocamos los componentes en el formulario
     QHBoxLayout*layout = new QHBoxLayout;
