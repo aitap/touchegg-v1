@@ -1,3 +1,4 @@
+#sidebar
 
 *Follow Touchégg on...* [https://code.google.com/p/touchegg/feeds https://lh3.googleusercontent.com/-52GoOXWJMJ8/TW45hTR7DaI/AAAAAAAAAEk/Qaj7O8dF-WM/rss.png]       [https://twitter.com/#!/Jose__Exposito https://lh3.googleusercontent.com/-iIHeqSdDWsE/Tj15isn38QI/AAAAAAAAAJU/MAu0vSOTqx4/twitter.png]
 
@@ -7,7 +8,7 @@
   * _Ubuntu 11.10 Oneiric Ocelot:_
     Touchégg is available in the Ubuntu official repository, to install it: <br/>
     {{{ $ sudo apt-get install touchegg }}} <br/>
-    Or go to the [https://launchpad.net/ubuntu/oneiric/+source/touchegg/1.0-0ubuntu1 launchpad page] to download DEB packages.
+    Or go to the [https://launchpad.net/ubuntu/oneiric/+source/touchegg/1.0-0ubuntu1 Launchpad page] to download DEB packages.
   * _Ubuntu 11.04 Natty Narwhal:_
     Is necessary update uTouch to the last version adding this PPA:<br/>
     https://launchpad.net/~utouch-team/+archive/daily <br/>
@@ -37,7 +38,7 @@
  - [http://touchegg.googlecode.com/files/touchegg-0.2.tar.gz Download Touchégg source code]
 
  - [http://touchegg.googlecode.com/files/touchegg-gui-0.2.tar.gz Download Touchégg GUI source code]
- 
+
 
 
  * *Touchégg v0.1:*

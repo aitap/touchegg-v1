@@ -5,14 +5,16 @@
 <br/>
 
  * *Touchégg v1.0:*
- El trabajo principal con Toucégg está terminado. Solo voy a hacer nuevos lanzamientos para añadir una GUI para esta versión y para solucionar los errores que puedan surgir.
+  * _Ubuntu 11.10 Oneiric Ocelot:_
+    Touchégg está disponible en el repositorio oficial de  Ubuntu, para instalarlo: <br/>
+    {{{ $ sudo apt-get install touchegg }}} <br/>
+    O si lo prefieres visita su [https://launchpad.net/ubuntu/oneiric/+source/touchegg/1.0-0ubuntu1 página en Launchpad] para descargar los paquetes DEB.
+  * _Ubuntu 11.04 Natty Narwhal:_
+    Es necesario actualizar uTouch a la última versión añadiendo este PPA: <br/>
+    https://launchpad.net/~utouch-team/+archive/daily <br/>
+    Y compilar el código fuente.
 
- Para instalar esta versión en Natty es necesario actualizar uTouch a la última versión añadiendo este PPA:
- https://launchpad.net/~utouch-team/+archive/daily
-
- Oneiric no necesita ingún cambio
-
- - [http://touchegg.googlecode.com/files/touchegg-1.0.tar.gz Descargar el código fuente de Touchégg]
+   - [http://touchegg.googlecode.com/files/touchegg-1.0.tar.gz Descargar el código fuente de Touchégg]
 
  
  * *Touchegg v0.3:*
