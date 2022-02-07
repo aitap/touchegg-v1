@@ -1,9 +1,7 @@
-**Follow Touchégg on...** [![](https://lh3.googleusercontent.com/-kRgKvb-T4_4/T9psNwZN3TI/AAAAAAAAANA/pwasxapdWm0/s33/twitter.png "Twitter")](https://twitter.com/#!/Jose__Exposito)
+About Touchégg-v1:
+==================
 
-About Touchégg:
-===============
-
-Touchégg allows the GNU/Linux users to make full use of their trackpacks.
+Touchégg allows the GNU/Linux users to make full use of their trackpads and touchscreens.
 
 By editing a simple configuration file you can attach an action to a particular gesture and –by performing those gestures on your trackpad– maximize, minimize or resize windows, show your desktop, emulate mouse clicks and more.
 
@@ -13,16 +11,11 @@ By editing a simple configuration file you can attach an action to a particular 
   </a>
 </p>
 
-For more information check the [wiki](https://github.com/JoseExposito/touchegg/wiki) or [ask a question](https://github.com/JoseExposito/touchegg/issues).
-
-Compilation and installation:
-=============================
-
-Follow the instructions available in the [wiki](https://github.com/JoseExposito/touchegg/wiki/How-to-compile-Touch%C3%A9gg-source-code)
+This is the first version of Touchégg, forked from the last commit in 2017 before the v2.0 rewrite. The [current version of Touchégg](https://github.com/JoseExposito/touchegg) has been modernised and gained a GUI configuration application, but lost the ability to scroll using one-finger drag gesture and now requires raw access to `/dev/input` for its daemon process. Admittedly, [the scroll emulation is very low quality](https://github.com/JoseExposito/touchegg/issues/438), but it's better than nothing.
 
 Copyright:
 ==========
 
-Copyright (C) 2011 - 2016 José Expósito <<jose.exposito89@gmail.com>> 
+Copyright (C) 2011 - 2017 José Expósito <<jose.exposito89@gmail.com>>
 
-The source code is available under GPL v2 license on [GitHub](https://github.com/JoseExposito/touchegg)
+The source code is available under GPL ≥ v2 license on [GitHub](https://github.com/aitap/touchegg-v1)

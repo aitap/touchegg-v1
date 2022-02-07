@@ -33,12 +33,8 @@ Touchégg makes an intensive use of Qt and uTouch. Reading this can help:
     http://people.canonical.com/~stephenwebb/geis-v2-api/
 
 
-### Contact the developer: ###
+### Original developer: ###
 
-If you want to report a bug, you can do it in the official bug tracker:
-
-    https://github.com/JoseExposito/touchegg/issues
-
-For other questions, talk about the weather or invite me to a beer :beer: you can send me an email to jose.exposito89@gmail.com
+Touchégg has been originally developed by José Expósito <jose.exposito89@gmail.com>. You can find it, currently (2022) at version 2, at <https://github.com/JoseExposito/touchegg>. Please don't contact him about bugs in this version of the program.
 
 Happy coding!
